@@ -1,6 +1,6 @@
 <template>
   <div class="todos-item">
-    <div class="todos-item__title">Lorem ipsum dolor sit amet.</div>
+    <div class="todos-item__title">{{ props.title }}</div>
     <div class="todos-item__controls">
       <div class="todos-item__controls-delete">
         <button>Delete</button>
@@ -13,7 +13,18 @@
 </template>
 
 <script setup>
+import { defineProps } from 'vue';
 
+const props = defineProps({
+    id: {
+        type: Number,
+        required: true,
+    },
+    title: {
+        type: String,
+        required: true,
+    }
+});
 </script>
 
 <style>

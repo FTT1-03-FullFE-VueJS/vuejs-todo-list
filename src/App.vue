@@ -11,8 +11,8 @@
 <script setup>
 import AppTitle from './components/AppTitle.vue';
 import AppContent from './components/AppContent.vue';
+import { ref } from '@vue/reactivity';
 const APP_TITLE = 'My Todo List Application';
-
 </script>
 <style>
 .container {

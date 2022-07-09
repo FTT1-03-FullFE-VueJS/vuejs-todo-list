@@ -1,7 +1,17 @@
 <template>
   <div class="form-button">
-    <button>Create new</button>
+    <button
+        @click="storeHandler"
+    >Create new</button>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { defineEmits } from 'vue';
+
+const emit = defineEmits(['onStore']);
+
+const storeHandler = () => {
+    emit('onStore');
+}
+</script>
