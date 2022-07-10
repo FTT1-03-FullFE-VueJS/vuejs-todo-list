@@ -3,21 +3,28 @@
     <div class="todos-item__title">{{ props.title }}</div>
     <div class="todos-item__controls">
       <div class="todos-item__controls-delete">
-        <button>Delete</button>
+        <button
+            type="button"
+            @click="delHandler"
+        >Delete</button>
       </div>
       <div class="todos-item__controls-edit">
-        <button>Edit</button>
+        <button
+            type="button"
+            @click="editHandler"
+        >Edit</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
+const emit = defineEmits(['onDel', 'onEdit']);
 const props = defineProps({
     id: {
-        type: Number,
+        type: String,
         required: true,
     },
     title: {
@@ -25,6 +32,14 @@ const props = defineProps({
         required: true,
     }
 });
+
+const delHandler = () => {
+    emit('onDel', props.id);
+}
+
+const editHandler = () => {
+    emit('onEdit', props.id);
+}
 </script>
 
 <style>

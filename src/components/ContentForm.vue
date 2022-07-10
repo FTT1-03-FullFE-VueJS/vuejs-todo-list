@@ -13,7 +13,9 @@
             @on-input="inputChangeHandler"
         />
         <form-button
+            :todo-selected="props.todoSelected"
             @on-store="storeHandler"
+            @on-update="updateHandler"
         />
       </template>
     </div>
@@ -26,7 +28,7 @@ import FormInput from './FormInput.vue';
 import FormButton from './FormButton.vue';
 import FormToggle from './FormToggle.vue';
 
-const emit = defineEmits(['onToggle', 'onInput', 'onStore']);
+const emit = defineEmits(['onToggle', 'onInput', 'onStore', 'onUpdate']);
 const props = defineProps({
     // Props of this component
     isShowForm: {
@@ -36,6 +38,10 @@ const props = defineProps({
     todoInput: {
         type: String,
         default: ''
+    },
+    todoSelected: {
+        type: Object,
+        default: null,
     }
 });
 
@@ -49,6 +55,10 @@ const inputChangeHandler = (value) => {
 
 const storeHandler = () => {
     emit('onStore');
+}
+
+const updateHandler = () => {
+    emit('onUpdate');
 }
 </script>
 <style>

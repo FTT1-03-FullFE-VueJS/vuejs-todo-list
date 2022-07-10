@@ -17,7 +17,7 @@ const props = defineProps({
     todoInput: {
         type: String,
         default: ''
-    }
+    },
 });
 
 const inputChangeHandler = (evt) => {
