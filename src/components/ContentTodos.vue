@@ -1,13 +1,16 @@
 <template>
   <div class="content-todos__wrapper">
-    <todos-item
-        v-for="(todo, index) in todos"
-        :key="index"
-        :id="todo.id"
-        :title="todo.title"
-        @on-del="delHandler"
-        @on-edit="editHandler"
-    />
+    <template v-if="props.todos.length > 0">
+        <todos-item
+            v-for="(todo, index) in props.todos"
+            :key="index"
+            :id="todo.id"
+            :title="todo.title"
+            @on-del="delHandler"
+            @on-edit="editHandler"
+        />
+    </template>
+    <div v-else>Todo is empty!</div>
   </div>
 </template>
 

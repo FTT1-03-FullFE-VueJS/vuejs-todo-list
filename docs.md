@@ -15,6 +15,9 @@ Quy tắc
 - Tìm trong todos có todo nào trùm với id mình muốn xóa không
 - Nếu có thì xóa nó đi
 - Nếu không thì thông báo "Todo is not defind"
+- Cải thiện
+    + 1: Confirm trước khi delete
+    + 2: Message để hiện thị khi không còn todo nào nữa.
 
 ## 3. Update item
 - Bắt sự kiện click update button

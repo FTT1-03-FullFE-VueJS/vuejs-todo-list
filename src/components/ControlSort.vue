@@ -2,7 +2,6 @@
   <div class="control-sort">
     <div class="control-sort__type">
       <select name="" id="">
-        <option value="">Level</option>
         <option value="">Title</option>
       </select>
     </div>

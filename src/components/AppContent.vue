@@ -1,7 +1,10 @@
 <template>
   <div class="app-content__wrapper">
     <div class="app-content__top">
-      <content-control />
+      <content-control
+        :search-input="searchInput"
+        @on-search="changeSearchInput"
+      />
       <content-form
         :is-show-form="isShowForm"
         :todo-input="todoInput"
@@ -14,7 +17,7 @@
     </div>
     <div class="app-content__bottom">
       <content-todos
-        :todos="todos"
+        :todos="todosFiltered"
         @on-del="delHandler"
         @on-edit="editHandler"
       />
@@ -23,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref } from '@vue/reactivity';
+import { ref, watch, computed } from 'vue';
 import ContentControl from './ContentControl.vue';
 import ContentForm from './ContentForm.vue';
 import ContentTodos from './ContentTodos.vue';
@@ -32,6 +35,7 @@ import { v4 as uuidv4 } from 'uuid';
 // State of this component
 const isShowForm = ref(false);
 const todoInput = ref('');
+const searchInput = ref('');
 const todoSelected = ref(null);
 const todos = ref([
     {
@@ -55,6 +59,47 @@ const toggleForm = () => {
 const inputChangeHandler = (value) => {
     todoInput.value = value;
 }
+
+const todosFiltered = computed(() => {
+    const todosCoped = [...todos.value];
+    const todosSearched = todosCoped.filter(todo => {
+        const title  = todo.title.toLowerCase();
+        const search = searchInput.value.toLowerCase();
+        return title.includes(search);
+    });
+
+    return todosSearched;
+});
+/**
+ * todos  = [ { title: 'nhan' }, { title: 'Hung' }, { title: 'Phong' } ]
+ * search 'Thach' in "todos  = [ { title: 'nhan' }, { title: 'Hung' }, { title: 'Phong' } ]"
+ * todosSearched = []
+ * todos = [ { title: 'nhan' }, { title: 'Hung' }, { title: 'Phong' } ]
+ *
+ * search 'nhan' in "todos = [ { title: 'nhan' }, { title: 'Hung' }, { title: 'Phong' } ]"
+ * return { title: 'nhan' }
+ *
+ * search 'Hung' in "todos = [ { title: 'nhan' }, { title: 'Hung' }, { title: 'Phong' } ]"
+ * return { title: 'Hung' }
+ */
+
+// const searchHandler = () => {
+//     const todosCoped = [...todos.value];
+//     const todosSearched = todosCoped.filter(todo => {
+//         const title  = todo.title.toLowerCase();
+//         const search = searchInput.value.toLowerCase();
+//         return title.includes(search);
+//     });
+//     todos.value = todosSearched;
+// }
+/**
+ * todos  = [ { title: 'nhan' }, { title: 'Hung' }, { title: 'Phong' } ]
+ * search = 'Thach' find "todos = [ { title: 'nhan' }, { title: 'Hung' }, { title: 'Phong' } ]"
+ * => todosSearched = []
+ * todos.value = todosSearched;
+ * => todos.value = []
+ * search = 'nhan' find "todos = []"
+ */
 
 const storeHandler = () => {
     if (todoInput.value.trim().length) {
@@ -103,6 +148,10 @@ const updateHandler = () => {
     } else {
         alert('Please enter new todo to update!');
     }
+}
+
+const changeSearchInput = (value) => {
+    searchInput.value = value;
 }
 </script>
 

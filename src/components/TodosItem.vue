@@ -32,9 +32,14 @@ const props = defineProps({
         required: true,
     }
 });
+const messageConfirm = {
+    del: 'Bạn có thực sự muốn xóa todo này không?'
+};
 
 const delHandler = () => {
-    emit('onDel', props.id);
+    if (confirm(messageConfirm.del)) {
+        emit('onDel', props.id);
+    }
 }
 
 const editHandler = () => {
