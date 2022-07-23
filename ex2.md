@@ -1,3 +1,4 @@
 - Bt1: Viết message confirm cho edit.
 - Bt2: Viết message confirm cho create.
 - Bt3: Viết chức năng sort.
+- Bt bổ sung (1, 2, 3, 4): https://tutorialzine.com/2016/03/5-practical-examples-for-learning-vue-js
