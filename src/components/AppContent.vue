@@ -3,7 +3,9 @@
     <div class="app-content__top">
       <content-control
         :search-input="searchInput"
+        :sort-order="sortOrder"
         @on-search="changeSearchInput"
+        @on-sort="sortHandler"
       />
       <content-form
         :is-show-form="isShowForm"
@@ -37,6 +39,7 @@ const isShowForm = ref(false);
 const todoInput = ref('');
 const searchInput = ref('');
 const todoSelected = ref(null);
+const sortOrder = ref('asc');
 const todos = ref([
     {
         id: uuidv4(),
@@ -61,12 +64,31 @@ const inputChangeHandler = (value) => {
 }
 
 const todosFiltered = computed(() => {
+    // Search
     const todosCoped = [...todos.value];
     const todosSearched = todosCoped.filter(todo => {
         const title  = todo.title.toLowerCase();
         const search = searchInput.value.toLowerCase();
         return title.includes(search);
     });
+
+    // Sort
+    let tmp = {};
+    for (let i = 0; i < todosSearched.length - 1; i++) {
+        if (sortOrder.value === 'asc') {
+            if ( todosSearched[i].title > todosSearched[i+1].title ) {
+                tmp = todosSearched[i];
+                todosSearched[i] = todosSearched[i+1];
+                todosSearched[i+1] = tmp;
+            }
+        } else {
+            if ( todosSearched[i].title < todosSearched[i+1].title ) {
+                tmp = todosSearched[i];
+                todosSearched[i] = todosSearched[i+1];
+                todosSearched[i+1] = tmp;
+            }
+        }
+    }
 
     return todosSearched;
 });
@@ -152,6 +174,10 @@ const updateHandler = () => {
 
 const changeSearchInput = (value) => {
     searchInput.value = value;
+}
+
+const sortHandler = (value) => {
+    sortOrder.value = value;
 }
 </script>
 

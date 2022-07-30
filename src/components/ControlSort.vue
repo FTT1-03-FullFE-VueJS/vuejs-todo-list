@@ -6,15 +6,31 @@
       </select>
     </div>
     <div class="control-sort__order">
-      <select name="" id="">
-        <option value="">ASC</option>
-        <option value="">DESC</option>
+      <select name="" id="" @change="sortOrderChange">
+        <option value="asc">ASC</option>
+        <option value="desc">DESC</option>
       </select>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue';
+const sortOrder = ref('asc');
+
+const emit = defineEmits(['onSort']);
+const props = defineProps({
+    sortOrder: {
+        type: String,
+        default: '',
+    }
+});
+
+const sortOrderChange = (evt) => {
+    const value = evt.target.value;
+    emit('onSort', value);
+}
+</script>
 <style>
 .control-sort {
   display: flex;
